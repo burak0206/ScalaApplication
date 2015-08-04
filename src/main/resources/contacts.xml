@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+<contacts>
+    <contact>
+        <id>1
+        </id>
+        <name>
+            Ahmet
+        </name>
+        <lastName>
+            Mehmet
+        </lastName>
+        <phones>
+            +90 555 222 33 44
+        </phones>
+    </contact>
+    <contact>
+        <id>1
+        </id>
+        <name>
+            Ahmet
+        </name>
+        <lastName>
+            Mehmet
+        </lastName>
+        <phones>
+            +90 555 222 33 44
+        </phones>
+    </contact>
+    <contact>
+        <id>
+            1
+        </id>
+        <name>
+            Ahmet
+        </name>
+        <lastName>
+            Mehmet
+        </lastName>
+        <phones>
+            +90 555 222 77 88
+        </phones>
+    </contact>
+    <contact>
+        <id>
+            1
+        </id>
+        <name>
+            Ahmet
+        </name>
+        <lastName>
+            Mehmet
+        </lastName>
+        <phones>
+            +90 555 222 66 22
+        </phones>
+    </contact>
+    <contact>
+        <id>
+            1
+        </id>
+        <name>
+            Ahmet
+        </name>
+        <lastName>
+            Mehmet
+        </lastName>
+        <phones>
+            +90 555 222 33 55
+        </phones>
+    </contact>
+    <contact>
+        <id>
+            2
+        </id>
+        <name>
+            Burak
+        </name>
+        <lastName>
+            Dağlı
+        </lastName>
+        <phones>
+            +90 505 903 33 30
+        </phones>
+    </contact>
+    <contact>
+        <id>
+            2
+        </id>
+        <name>
+            Burak
+        </name>
+        <lastName>
+            Dağlı
+        </lastName>
+        <phones>
+            +90 505 500 90 40
+        </phones>
+    </contact>
+    <contact>
+        <id>
+            3
+        </id>
+        <name>
+            Nidal
+        </name>
+        <lastName>
+            Aras
+        </lastName>
+        <phones>
+            +90 535 952 59 03
+        </phones>
+    </contact>
+    <contact>
+        <id>
+            4
+        </id>
+        <name>
+            Burak
+        </name>
+        <lastName>
+            Aras
+        </lastName>
+        <phones>
+            +90 505 900 00 00
+        </phones>
+    </contact>
+    <contact>
+        <id>
+            5
+        </id>
+        <name>
+            Nidal Aras
+        </name>
+        <lastName>
+            Dağlı
+        </lastName>
+        <phones>
+            +90 505 911 11 11
+        </phones>
+    </contact>
+</contacts>
