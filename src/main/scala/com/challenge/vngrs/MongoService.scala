@@ -1,8 +1,6 @@
 package com.challenge.vngrs
 
 import akka.actor.{ActorRef, Actor}
-import com.challenge.vngrs.MongoService.Failed
-import com.mongodb.MongoTimeoutException
 import com.mongodb.casbah.Imports._
 
 import scala.xml.XML
@@ -14,28 +12,35 @@ class MongoService extends Actor {
   val coll = db("contacts")
 
   def receive = {
-    case Load(sender:ActorRef, files: List[String], app: ActorRef, dropFlag: Boolean) => load(sender, files, app, dropFlag)
+    case Load(sender:ActorRef, files: List[String], app: ActorRef, dropFlag: Boolean, isExternal:Boolean) => load(sender, files, app, dropFlag, isExternal)
     case Find(sender:ActorRef, name: String, app: ActorRef) => findByName(sender, name, app)
     case Drop(sender:ActorRef, app: ActorRef) => dropAndSendMessage(sender, app)
   }
 
-  def load(sender:ActorRef, files: List[String], app: ActorRef, dropFlag: Boolean) = {
+  def load(sender:ActorRef, files: List[String], app: ActorRef, dropFlag: Boolean, isExternal: Boolean) = {
     try {
       var resultMessage = "old collection is dropped. " + files.mkString(", ").concat(" loaded.")
       if(dropFlag) coll.drop()
       else resultMessage = "old collection is not dropped. " + files.mkString(", ").concat(" added.")
-      files.foreach(insert)
+      files.foreach(insert(isExternal))
       sender ! Done(resultMessage, app)
     } catch {
       case m: com.mongodb.MongoTimeoutException =>  sender ! Failed(m.toString + "\n" + Util.mongoTimeoutException,app)
       case s: org.xml.sax.SAXParseException =>  sender ! Failed(s.toString + "\n" + Util.thereAreErrorsInFiles,app)
       case n: java.lang.NullPointerException => sender ! Failed(n.toString + "\n" + Util.filesAreNotExist, app)
+      case f: java.io.FileNotFoundException => sender ! Failed(f.toString + "\n" + Util.filesAreNotExist, app)
     }
   }
 
-  def insert(fileName: String):Unit =  {
-    val url = getClass().getClassLoader.getResource(fileName)
-    val xml = XML.load(url)
+  def insert(isExternal:Boolean)(fileName: String):Unit =  {
+    var xml = <contact></contact>
+    if (isExternal) {
+      xml = XML.loadFile(fileName)
+    }
+    else {
+      val url = getClass().getClassLoader.getResource(fileName)
+      xml = XML.load(url)
+    }
     val nodes = xml \ "contact"
     val contacts = nodes.map{ contact =>
       val id = ( contact \ "id")
@@ -84,7 +89,7 @@ class MongoService extends Actor {
 }
 
 object MongoService {
-  case class Load(sender:ActorRef, files: List[String], app: ActorRef, dropFlag: Boolean)
+  case class Load(sender:ActorRef, files: List[String], app: ActorRef, dropFlag: Boolean, isExternal: Boolean)
   case class Find(sender:ActorRef, name: String, app: ActorRef)
   case class Drop(sender:ActorRef, app: ActorRef)
   case class Done(result: String, app: ActorRef)
