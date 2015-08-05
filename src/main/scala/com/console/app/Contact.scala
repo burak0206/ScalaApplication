@@ -1,4 +1,4 @@
-package com.challenge.vngrs
+package com.console.app
 
 /**
  * Created by burakdagli on 1.08.15.

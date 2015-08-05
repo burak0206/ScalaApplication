@@ -1,4 +1,4 @@
-package com.challenge.vngrs
+package com.console.app
 
 import akka.actor.{Props, Actor}
 

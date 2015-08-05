@@ -1,4 +1,4 @@
-package com.challenge.vngrs
+package com.console.app
 
 import akka.actor.{ActorRef, Actor}
 import com.mongodb.casbah.Imports._

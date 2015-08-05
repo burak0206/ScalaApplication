@@ -1,4 +1,4 @@
-package com.challenge.vngrs
+package com.console.app
 
 import akka.actor.{ActorRef, Props, Actor}
 import scala.io.StdIn._
