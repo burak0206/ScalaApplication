@@ -19,9 +19,9 @@ class CLICommandExecute extends Actor {
       case Util.help() => app ! Done(Util.helpDescription)
       case Util.exit() => app ! Exit
       case Util.drop() => mongoService ! MongoService.Drop(self,app)
-      case Util.load(fileNames) => mongoService ! MongoService.Load(self, fileNames.split("\\s+").map(_.trim).toList, app)
+      case Util.load(fileNames) => mongoService ! MongoService.Load(self, fileNames.split("\\s+").map(_.trim).toList, app, true)
       case Util.find(name) => mongoService ! MongoService.Find(self, name, app)
-      case Util.add(fileName) => mongoService ! MongoService.AddOneFile(self, fileName, app)
+      case Util.add(fileNames) => mongoService ! MongoService.Load(self, fileNames.split("\\s+").map(_.trim).toList, app, false)
       case _ => sender ! Done(Util.unknownCommand)
     }
   }
