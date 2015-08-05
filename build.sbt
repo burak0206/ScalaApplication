@@ -1,4 +1,4 @@
-name := "MongoScalaFirst"
+name := "ScalaApplication"
 
 version := "1.0"
 
