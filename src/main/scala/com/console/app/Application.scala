@@ -11,7 +11,7 @@ class Application extends Actor{
   def receive = {
     case CLICommandExecute.Done(result: String) => {
       println(result)
-      cliCommandExecute ! CLICommandExecute.Listen(self)
+      sender ! CLICommandExecute.Listen(self)
     }
     case CLICommandExecute.Failed(result: String) => {
       println(result)
