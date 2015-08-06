@@ -23,8 +23,7 @@ class MongoService extends Actor {
       var resultMessage = "old collection is dropped. " + files.mkString(", ").concat(" loaded.")
       if(dropFlag) coll.drop()
       else resultMessage = "old collection is not dropped. " + files.mkString(", ").concat(" added.")
-      coll.createIndex(MongoDBObject("name" -> 1,
-      "lastName" -> 1))
+      coll.createIndex(MongoDBObject("name" -> 1, "lastName" -> 1), MongoDBObject("unique" -> true))
       files.foreach(insert(isExternal))
       sender ! Done(resultMessage, app)
     } catch {
