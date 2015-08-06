@@ -11,6 +11,7 @@ class MongoService extends Actor {
   val db = MongoClient()("test")
   val coll = db("contacts")
 
+
   def receive = {
     case Load(sender:ActorRef, files: List[String], app: ActorRef, dropFlag: Boolean, isExternal:Boolean) => load(sender, files, app, dropFlag, isExternal)
     case Find(sender:ActorRef, name: String, app: ActorRef) => findByName(sender, name, app)
@@ -22,6 +23,8 @@ class MongoService extends Actor {
       var resultMessage = "old collection is dropped. " + files.mkString(", ").concat(" loaded.")
       if(dropFlag) coll.drop()
       else resultMessage = "old collection is not dropped. " + files.mkString(", ").concat(" added.")
+      coll.createIndex(MongoDBObject("name" -> 1,
+      "lastName" -> 1))
       files.foreach(insert(isExternal))
       sender ! Done(resultMessage, app)
     } catch {
