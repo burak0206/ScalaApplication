@@ -51,19 +51,41 @@ Not: 5 ve 6 dışındaki komutlar MongoDB ile çalışmaktadır. Eğer MongoDB �
 
 Proje `src/main/resources` altdizini içerisinde 3 tane xml dosyası bulunmaktadır. Testleri kolaylaştırması için bu dosyalar eklenmiştir. Dosyaların adları `contacts.xml`, `contacts2.xml` ve `contacts22.xml`. Aralarında `contacts22.xml` adlı dosya hata içermektedir. Dosyanın eklenmesindeki amaç bu hata durumunda uygulamanın verdiği yanıtı göstermektir.
 
-1. `exit`
+* `exit`
 
-2. `help`
+Uygulamayı sonlandırır.
 
-3. `drop`
+* `help`
 
-4. `load filename1 filename2 ...` ve `loadExtFile /Users/burakdagli/Desktop/contacts.xml ...`
+Uygulamadaki geçerli komutları ve parametrelerini gösterir.
 
-5. `add filename1 filename2 ...` ve `addExtFile /Users/burakdagli/Desktop/contacts.xml ...`
+* `drop`
 
-6. `findByName`
+MongoDB içerisinde oluşturulan collection drop edilir. Eğer MongoDB i çalışmıyorsa hata kodu döndürülür ve uygulama sonlandırılır.
 
-Eğer bunların dışında ya da formatları dışında komutlar girilirse hata mesajı dönülür ve yeni komut istenir.
+* `load filename1 filename2 ...` ve `loadExtFile /Users/burakdagli/Desktop/contacts.xml ...`
+
+`load` komutu n adet dosya ismini parametre alarak çalışır. Bu dosyalar `src/main/resources` dizini altında olmak zorundadır. Dosyalardan en az biri yoksa, dosyalardan en az biri hata taşıyorlarsa ya da MongoDB  çalışmıyorsa hata kodu döndürülür ve uygulama sonlandırılır. Test için `contacts.xml`, `contacts2.xml` ve `contacts22.xml` adlı dosyalar eklenmiş olup `contacts22.xml` hatalar barındırmaktadır. Dosyalardan en az biri yoksa, dosyalardan en az biri hata taşıyorlarsa ya da MongoDB  çalışmıyorsa hata kodu döndürülür ve uygulama sonlandırılır. Komut çağrıldıktan sonra önceki collection drop edilir. Ardından yeni veriler eklenir.
+
+`loadExtFile` komutu n adet dosya yolunu parametre alarak çalışır. Örneğin:
+`loadExtFile /Users/burakdagli/Desktop/contacts.xml /Users/burakdagli/Desktop/contacts2.xml`
+Dosyalardan en az biri yoksa, dosyalardan en az biri hata taşıyorlarsa ya da MongoDB  çalışmıyorsa hata kodu döndürülür ve uygulama sonlandırılır. Komut çağrıldıktan sonra önceki collection drop edilir. Ardından yeni veriler eklenir.
+
+* `add filename1 filename2 ...` ve `addExtFile /Users/burakdagli/Desktop/contacts.xml ...`
+
+`add` ve `addExtFile` komutları da `load`, `loadExtFile` arasındaki benzerliği taşır. Onlardan farkları collection drop edilmez, böylelikle eski veriler silinmez. Dosyalardan en az biri yoksa, dosyalardan en az biri hata taşıyorlarsa ya da MongoDB  çalışmıyorsa hata kodu döndürülür ve uygulama sonlandırılır.
+
+* `findByName name`
+ 
+Bu komut kişilerin birden fazla ismi olabileceği düşünülerek tasarlandı. Örneğin: `findByName Nidal Aras`
+
+`{ "_id" : { "$oid" : "55c3b8e706595b0392b8bc3d"} , "lastName" : "Dağlı" , "name" : "Nidal Aras" , "phones" : [ "+90 505 911 11 11"]}`
+
+ Sorgu sonucu boş ise `Contact is not found!` mesajı döner.
+ MongoDB  çalışmıyorsa hata kodu döndürülür ve uygulama sonlandırılır.
+
+
+Eğer bunların dışında ya da parametre formatları dışında komutlar girilirse hata mesajı dönülür ve yeni komut istenir.
 
 `Please, You enter command:`
 
@@ -76,10 +98,3 @@ Eğer bunların dışında ya da formatları dışında komutlar girilirse hata 
 MongoDB'ye yapılan arama sorguları `name` alanı ile sınırlandırılması istenmiştir. Ayrıca `name` ve `lastName` ikilisinin tekil olması istenmiştir. Bu iki durumu kapsayacak bir şekilde aşağıda tanımlanan index eklenmiştir:
 
 `coll.createIndex(MongoDBObject("name" -> 1, "lastName" -> 1), MongoDBObject("unique" -> true))`
-
-
-
-
-
-
-
